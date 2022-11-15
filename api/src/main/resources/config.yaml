@@ -6,10 +6,10 @@ kumuluzee:
   server:
     base-url: http://localhost:8181
     http:
-      port: 8181
+      port: 8080
   datasources:
     - jndi-name: jdbc/DeliveriesDS
-      connection-url: jdbc:postgresql://localhost:5432/deliveries
+      connection-url: jdbc:postgresql://localhost:5433/deliveries
       username: dbuser
       password: postgres
       max-pool-size: 20
