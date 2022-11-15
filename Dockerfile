@@ -5,6 +5,6 @@ WORKDIR /app
 
 ADD ./api/target/deliveries-api-1.0.0-SNAPSHOT.jar /app
 
-EXPOSE 8080
+EXPOSE 8181
 
 CMD ["java", "-jar", "deliveries-api-1.0.0-SNAPSHOT.jar"]
