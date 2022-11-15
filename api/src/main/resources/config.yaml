@@ -4,12 +4,12 @@ kumuluzee:
     name: dev
   version: 1.0.0
   server:
-    base-url: http://localhost:8080
+    base-url: http://localhost:8181
     http:
-      port: 8080
+      port: 8181
   datasources:
     - jndi-name: jdbc/DeliveriesDS
-      connection-url: jdbc:postgresql://localhost:5432/deliveries
+      connection-url: jdbc:postgresql://localhost:5434/deliveries
       username: dbuser
       password: postgres
       max-pool-size: 20

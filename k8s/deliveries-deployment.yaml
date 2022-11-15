@@ -17,8 +17,8 @@ spec:
           name: deliveries
           env:
             - name: KUMULUZEE_DATASOURCES1_CONNECTIONURL
-              value: jdbc:postgresql://ella.db.elephantsql.com:5432/fajqyywa
-            - name: KUMULUZEE_DATASOURCES0_USERNAME
+              value: jdbc:postgresql://ella.db.elephantsql.com:5434/fajqyywa
+            - name: KUMULUZEE_DATASOURCES1_USERNAME
               value: fajqyywa
             - name: KUMULUZEE_DATASOURCES1_PASSWORD
               valueFrom:
