@@ -13,11 +13,11 @@ spec:
         app: deliveries
     spec:
       containers:
-        - image: feniksa18/deliveries:2022-11-15-18-59-59
+        - image: feniksa18/deliveries:2022-11-15-19-17-14
           name: deliveries
           env:
             - name: KUMULUZEE_DATASOURCES1_CONNECTIONURL
-              value: jdbc:postgresql://ella.db.elephantsql.com:5434/fajqyywa
+              value: jdbc:postgresql://ella.db.elephantsql.com:5432/fajqyywa
             - name: KUMULUZEE_DATASOURCES1_USERNAME
               value: fajqyywa
             - name: KUMULUZEE_DATASOURCES1_PASSWORD
