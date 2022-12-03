@@ -13,7 +13,7 @@ spec:
         app: deliveries
     spec:
       containers:
-        - image: feniksa18/deliveries:2022-11-15-20-22-44
+        - image: feniksa18/deliveries:2022-12-03-13-20-36
           name: deliveries
           env:
             - name: KUMULUZEE_DATASOURCES1_CONNECTIONURL
