@@ -13,20 +13,20 @@ spec:
         app: deliveries
     spec:
       containers:
-        - image: feniksa18/deliveries:2022-12-03-13-20-36
+        - image: feniksa18/deliveries:2022-12-04-16-29-49
           name: deliveries
           env:
-            - name: KUMULUZEE_DATASOURCES1_CONNECTIONURL
-              value: jdbc:postgresql://ella.db.elephantsql.com:5432/fajqyywa
-            - name: KUMULUZEE_DATASOURCES1_USERNAME
+            - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+              value: jdbc:postgresql://ella.db.elephantsql.com:5434/fajqyywa
+            - name: KUMULUZEE_DATASOURCES0_USERNAME
               value: fajqyywa
-            - name: KUMULUZEE_DATASOURCES1_PASSWORD
+            - name: KUMULUZEE_DATASOURCES0_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: pg-pass
-                  key: KUMULUZEE_DATASOURCES1_PASSWORD
+                  name: pg-pass2
+                  key: KUMULUZEE_DATASOURCES0_PASSWORD
           ports:
-            - containerPort: 8080
+            - containerPort: 8181
               name: server
               protocol: TCP
 
@@ -39,7 +39,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 8080
+    - port: 8181
       protocol: TCP
       targetPort: server
   selector:
