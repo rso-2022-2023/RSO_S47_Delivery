@@ -9,7 +9,7 @@ kumuluzee:
       port: 8080
   datasources:
     - jndi-name: jdbc/DeliveriesDS
-      connection-url: jdbc:postgresql://localhost:5432/deliveries
-      username: dbuser
-      password: postgres
+      connection-url: jdbc:postgresql://localhost:5434/deliveries
+      username: dbuser2
+      password: postgres2
       max-pool-size: 20
