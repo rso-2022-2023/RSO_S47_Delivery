@@ -12,7 +12,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import si.fri.rso.samples.deliveries.lib.*;
 import si.fri.rso.samples.deliveries.services.beans.*;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -22,7 +21,15 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.logging.Logger;
+import com.kumuluz.ee.logs.cdi.Log;
+import si.fri.rso.samples.deliveries.api.v1.dtos.UploadImageResponse;
+import si.fri.rso.samples.deliveries.services.clients.AmazonRekognitionClient;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
+@Log
 @ApplicationScoped
 @Tag(name = "delivery", description = "Everything about deliveries")
 @Path("/delivery")
@@ -42,6 +49,9 @@ public class DeliveryResource {
 
     @Context
     protected UriInfo uriInfo;
+
+    @Inject
+    private AmazonRekognitionClient amazonRekognitionClient;
 
     @Operation(description = "Get a list of all deliveries.", summary = "Get all deliveries.")
     @APIResponses({
