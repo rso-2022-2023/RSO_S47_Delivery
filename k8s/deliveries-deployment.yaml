@@ -17,7 +17,7 @@ spec:
           name: deliveries
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-              value: jdbc:postgresql://ella.db.elephantsql.com:5434/fajqyywa
+              value: jdbc:postgresql://ella.db.elephantsql.com:5432/fajqyywa
             - name: KUMULUZEE_DATASOURCES0_USERNAME
               value: fajqyywa
             - name: KUMULUZEE_DATASOURCES0_PASSWORD
@@ -26,7 +26,7 @@ spec:
                   name: pg-pass2
                   key: KUMULUZEE_DATASOURCES0_PASSWORD
           ports:
-            - containerPort: 8181
+            - containerPort: 8080
               name: server
               protocol: TCP
 
@@ -39,7 +39,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 8181
+    - port: 8080
       protocol: TCP
       targetPort: server
   selector:
