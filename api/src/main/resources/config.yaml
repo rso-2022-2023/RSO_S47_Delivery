@@ -13,5 +13,15 @@ kumuluzee:
       username: dbuser2
       password: postgres2
       max-pool-size: 20
+  health:
+    checks:
+      data-source-health-check:
+        type: liveness
+        jndi-name: jdbc/DeliveriesDS
+    metrics:
+      web-instrumentation:
+        - name: deliveries-endpoint
+          url-pattern: /v1/delivery/*
 rest-properties:
   maintenance-mode: false
+  broken: false

@@ -3,7 +3,7 @@ package si.fri.rso.samples.deliveries.services.beans;
 import si.fri.rso.samples.deliveries.lib.Delivery;
 import si.fri.rso.samples.deliveries.models.converters.DeliveryConverter;
 import si.fri.rso.samples.deliveries.models.entities.*;
-
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -23,6 +23,7 @@ public class DeliveryBean {
     @Inject
     private EntityManager em;
 
+    @Timed
     public List<Delivery> getAllDelivery() {
         TypedQuery<DeliveryEntity> query = em.createNamedQuery(
                 "DeliveryEntity.getAll", DeliveryEntity.class);
