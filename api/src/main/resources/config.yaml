@@ -12,7 +12,8 @@ kumuluzee:
       connection-url: jdbc:postgresql://localhost:5434/deliveries
       username: dbuser2
       password: postgres2
-      max-pool-size: 20
+      pool:
+        max-size: 20
   health:
     checks:
       data-source-health-check:
@@ -42,6 +43,16 @@ kumuluzee:
                                   </Root>
                               </Loggers>
                           </Configuration>'
+  rest-client:
+    registrations:
+      - class: delivery-processing-api
+        url: http://localhost:8082/v1
+        read-timeout: 5000
+  dev:
+    scan-libraries:
+      - deliveries-services
+      - deliveries-models
+      - deliveries-lib
 rest-properties:
   maintenance-mode: false
   broken: false

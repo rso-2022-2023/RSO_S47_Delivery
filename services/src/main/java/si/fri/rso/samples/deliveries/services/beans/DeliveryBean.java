@@ -15,13 +15,35 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
+import javax.annotation.PostConstruct;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.GenericType;
+import java.time.temporal.ChronoUnit;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 @RequestScoped
 public class DeliveryBean {
     private Logger log = Logger.getLogger(DeliveryBean.class.getName());
 
     @Inject
+    private DeliveryBean deliveryBeanProxy;
+
+    @Inject
     private EntityManager em;
+
+    private Client httpClient;
+    private String baseUrl;
+
+    @PostConstruct
+    private void init() {
+        httpClient = ClientBuilder.newClient();
+        baseUrl = "http://localhost:8081"; // only for demonstration
+    }
 
     @Timed
     public List<Delivery> getAllDelivery() {
@@ -133,6 +155,26 @@ public class DeliveryBean {
 
         return true;
     }
+
+    //    @Timeout(value = 2, unit = ChronoUnit.SECONDS)
+    //    @CircuitBreaker(requestVolumeThreshold = 3)
+    //    @Fallback(fallbackMethod = "getCommentCountFallback")
+    //    public Integer getCommentCount(Integer imageId) {
+    //
+    //        log.info("Calling comments service: getting comment count.");
+    //
+    //        try {
+    //            return httpClient
+    //                    .target(baseUrl + "/v1/comments/count")
+    //                    .queryParam("imageId", imageId)
+    //                    .request().get(new GenericType<Integer>() {
+    //                    });
+    //        }
+    //        catch (WebApplicationException | ProcessingException e) {
+    //            log.severe(e.getMessage());
+    //            throw new InternalServerErrorException(e);
+    //        }
+    //    }
 
     private String getCurrentTime() {
         LocalDateTime time = LocalDateTime.now();
