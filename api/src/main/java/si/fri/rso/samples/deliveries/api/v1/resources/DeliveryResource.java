@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.logging.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import si.fri.rso.samples.deliveries.api.v1.dtos.UploadImageResponse;
+import com.kumuluz.ee.streaming.common.annotations.StreamProducer;
+import si.fri.rso.samples.deliveries.services.streaming.EventProducerImpl;
 import si.fri.rso.samples.deliveries.services.clients.AmazonRekognitionClient;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,6 +54,9 @@ public class DeliveryResource {
 
     @Inject
     private AmazonRekognitionClient amazonRekognitionClient;
+
+    @Inject
+    private EventProducerImpl eventProducer;
 
     @Operation(description = "Get a list of all deliveries.", summary = "Get all deliveries.")
     @APIResponses({
