@@ -19,10 +19,18 @@ kumuluzee:
       data-source-health-check:
         jndi-name: jdbc/DeliveriesDS
         type: liveness
+      disk-space-health-check:
+        threshold: 100000000
   metrics:
     web-instrumentation:
       - name: deliveries-endpoint
         url-pattern: /v1/delivery/*
+    servlet:
+      enabled: true
+      mapping: /metrics
+    logs:
+      period-s: 60
+      level: INFO
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                           <Configuration name="comments">
@@ -30,7 +38,7 @@ kumuluzee:
                                   <Console name="console" target="SYSTEM_OUT">
                                       <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
                                   </Console>
-                                  <Socket name="logstash" host="252b3467-998c-4656-8cbc-26fb37a9a4f2-ls.logit.io"
+                                  <Socket name="logstash" host="b52a5eb3-8fd9-4dfb-87e9-bb5c807b64a3-ls.logit.io"
                                   port="13894" protocol="udp">
                                       <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
                                   </Socket>
@@ -76,6 +84,8 @@ rest-properties:
   maintenance-mode: false
   broken: false
 app-properties:
-  amazon-rekognition:
-    access-key:
-    secret-key:
+  external-services:
+    enabled: true
+  amazon-location:
+    access-key: AKIA3JC5Z26EQBZLG5EQ
+    secret-key: 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

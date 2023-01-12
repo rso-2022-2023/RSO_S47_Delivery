@@ -15,11 +15,11 @@ public class AppProperties {
     @ConfigValue(watch = true)
     private boolean healthy;
 
-    @ConfigValue("amazon-rekognition.access-key")
-    private String amazonRekognitionAccessKey;
+    @ConfigValue("amazon-location.access-key")
+    private String amazonLocationAccessKey;
 
-    @ConfigValue("amazon-rekognition.secret-key")
-    private String amazonRekognitionSecretKey;
+    @ConfigValue("amazon-location.secret-key")
+    private String amazonLocationSecretKey;
 
     public boolean isExternalServicesEnabled() {
         return externalServicesEnabled;
@@ -37,19 +37,19 @@ public class AppProperties {
         this.healthy = healthy;
     }
 
-    public String getAmazonRekognitionSecretKey() {
-        return amazonRekognitionSecretKey;
+    public String getAmazonLocationSecretKey() {
+        return amazonLocationSecretKey;
     }
 
-    public void setAmazonRekognitionSecretKey(String amazonRekognitionSecretKey) {
-        this.amazonRekognitionSecretKey = amazonRekognitionSecretKey;
+    public void setAmazonLocationSecretKey(String amazonLocationSecretKey) {
+        this.amazonLocationSecretKey = amazonLocationSecretKey;
     }
 
-    public String getAmazonRekognitionAccessKey() {
-        return amazonRekognitionAccessKey;
+    public String getAmazonLocationAccessKey() {
+        return amazonLocationAccessKey;
     }
 
-    public void setAmazonRekognitionAccessKey(String amazonRekognitionAccessKey) {
-        this.amazonRekognitionAccessKey = amazonRekognitionAccessKey;
+    public void setAmazonLocationAccessKey(String amazonLocationAccessKey) {
+        this.amazonLocationAccessKey = amazonLocationAccessKey;
     }
 }

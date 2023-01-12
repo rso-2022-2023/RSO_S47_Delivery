@@ -15,6 +15,10 @@ public class Delivery {
 
     private ShortDeliveryAddress toAddress;
 
+    private Short statusId;
+
+    private ShortDeliveryStatus status;
+
     private Short typeId;
 
     private ShortDeliveryType type;
@@ -91,6 +95,22 @@ public class Delivery {
 
     public void setToAddress(ShortDeliveryAddress newToAddress) {
         this.toAddress = newToAddress;
+    }
+
+    public Short getStatusId() {
+        return this.statusId;
+    }
+
+    public void setStatusId(Short newStatusId) {
+        this.statusId = newStatusId;
+    }
+
+    public ShortDeliveryStatus getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(ShortDeliveryStatus newStatus) {
+        this.status = newStatus;
     }
 
     public Short getTypeId() {

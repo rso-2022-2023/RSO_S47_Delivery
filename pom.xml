@@ -98,6 +98,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.kumuluz.ee.metrics</groupId>
+                <artifactId>kumuluzee-metrics-logs</artifactId>
+                <version>${kumuluzee-metrics.version}</version>
+            </dependency>
+
+            <dependency>
                 <artifactId>kumuluzee-logs-log4j2</artifactId>
                 <groupId>com.kumuluz.ee.logs</groupId>
                 <version>${kumuluzee-logs.version}</version>
@@ -105,7 +111,7 @@
 
             <dependency>
                 <groupId>com.amazonaws</groupId>
-                <artifactId>aws-java-sdk-rekognition</artifactId>
+                <artifactId>aws-java-sdk-location</artifactId>
                 <version>${aws-java-sdk.version}</version>
             </dependency>
 

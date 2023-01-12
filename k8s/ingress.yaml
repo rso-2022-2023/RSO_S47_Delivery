@@ -18,3 +18,10 @@ spec:
                 name: deliveries
                 port:
                   number: 8080
+          - path: /mapDelivery(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: maps
+                port:
+                  number: 8081

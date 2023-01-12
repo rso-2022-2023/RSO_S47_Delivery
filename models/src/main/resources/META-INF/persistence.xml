@@ -3,6 +3,7 @@
     <persistence-unit name="deliveries-jpa" transaction-type="RESOURCE_LOCAL">
         <non-jta-data-source>jdbc/DeliveriesDS</non-jta-data-source>
 
+        <class>si.fri.rso.samples.deliveries.models.entities.DeliveryStatusEntity</class>
         <class>si.fri.rso.samples.deliveries.models.entities.DeliveryTypeEntity</class>
         <class>si.fri.rso.samples.deliveries.models.entities.DeliveryTransportEntity</class>
         <class>si.fri.rso.samples.deliveries.models.entities.DeliveryCustomerEntity</class>

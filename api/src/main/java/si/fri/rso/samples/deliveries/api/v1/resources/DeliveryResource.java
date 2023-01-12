@@ -1,5 +1,6 @@
 package si.fri.rso.samples.deliveries.api.v1.resources;
 
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -22,14 +23,8 @@ import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.logging.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
-import si.fri.rso.samples.deliveries.api.v1.dtos.UploadImageResponse;
-import com.kumuluz.ee.streaming.common.annotations.StreamProducer;
+import si.fri.rso.samples.deliveries.services.clients.AmazonLocationClient;
 import si.fri.rso.samples.deliveries.services.streaming.EventProducerImpl;
-import si.fri.rso.samples.deliveries.services.clients.AmazonRekognitionClient;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Log
 @ApplicationScoped
@@ -39,6 +34,9 @@ import java.util.stream.Collectors;
 @Consumes(MediaType.APPLICATION_JSON)
 public class DeliveryResource {
     private Logger log = Logger.getLogger(DeliveryResource.class.getName());
+
+    @Inject
+    private AmazonLocationClient amazonLocationClient;
 
     @Inject
     private DeliveryBean deliveryBean;
@@ -51,9 +49,6 @@ public class DeliveryResource {
 
     @Context
     protected UriInfo uriInfo;
-
-    @Inject
-    private AmazonRekognitionClient amazonRekognitionClient;
 
     @Inject
     private EventProducerImpl eventProducer;
@@ -77,7 +72,7 @@ public class DeliveryResource {
         return Response.status(Response.Status.OK).entity(deliveryList).build();
     }
 
-
+    @Timed(name="timed_getting_delivery_by_id")
     @Operation(description = "Get a chosen delivery by ID.", summary = "Get delivery by ID.")
     @APIResponses({
             @APIResponse(responseCode = "200",
@@ -105,7 +100,6 @@ public class DeliveryResource {
     }
 
 
-    // TO-DO -> WORKING
     @Operation(description = "Create a new delivery.", summary = "Create delivery.")
     @APIResponses({
             @APIResponse(responseCode = "201",
@@ -117,7 +111,7 @@ public class DeliveryResource {
             )
     })
     @POST
-    public Response createOrder(@RequestBody(
+    public Response createDelivery(@RequestBody(
             description = "DTO object with required delivery customerId, fromAddressId, toAddressId, typeId, transportId.",
             required = true, content = @Content(
             schema = @Schema(implementation = Delivery.class))) Delivery delivery) {
@@ -137,7 +131,6 @@ public class DeliveryResource {
     }
 
 
-    // TO-DO -> WORKING
     @Operation(description = "Update an existing delivery by ID.", summary = "Update delivery by ID.")
     @APIResponses({
             @APIResponse(responseCode = "200",
@@ -150,7 +143,7 @@ public class DeliveryResource {
     })
     @PUT
     @Path("/{deliveryId}")
-    public Response updateOrder(@Parameter(description = "Delivery ID.", required = true)
+    public Response updateDelivery(@Parameter(description = "Delivery ID.", required = true)
                                 @PathParam("deliveryId") Long deliveryId,
                                 @RequestBody(
                                         description = "DTO object with required delivery customerId, fromAddressId, toAddressId, typeId, transportId.",
@@ -181,7 +174,7 @@ public class DeliveryResource {
     })
     @DELETE
     @Path("/{deliveryId}")
-    public Response deleteOrder(@Parameter(description = "Delivery ID.", required = true)
+    public Response deleteDelivery(@Parameter(description = "Delivery ID.", required = true)
                                 @PathParam("deliveryId") Long deliveryId) {
 
         boolean deleted = deliveryBean.deleteDelivery(deliveryId);
@@ -195,36 +188,42 @@ public class DeliveryResource {
 
 
     private void convertToShort(Delivery delivery) {
+        ShortDeliveryStatus status = new ShortDeliveryStatus();
+        status.setStatusId(delivery.getStatusId());
+        status.setLink(uriInfo.getBaseUri() + "deliveryStatus/" + delivery.getStatusId());
+        delivery.setStatusId(null);
+
         ShortDeliveryType type = new ShortDeliveryType();
         type.setTypeId(delivery.getTypeId());
-        type.setLink("http://localhost:8080/v1/deliveryType/" + delivery.getTypeId());
+        type.setLink(uriInfo.getBaseUri() + "deliveryType/" + delivery.getTypeId());
         delivery.setTypeId(null);
 
         ShortDeliveryTransport transport = new ShortDeliveryTransport();
         transport.setTransportId(delivery.getTransportId());
-        transport.setLink("http://localhost:8080/v1/deliveryTransport/" + delivery.getTransportId());
+        transport.setLink(uriInfo.getBaseUri() + "deliveryTransport/" + delivery.getTransportId());
         delivery.setTransportId(null);
 
         ShortDeliveryCustomer customer = new ShortDeliveryCustomer();
         customer.setCustomerId(delivery.getCustomerId());
         customer.setFullName(deliveryCustomerBean.getFullName(delivery.getCustomerId()));
-        customer.setLink("http://localhost:8080/v1/deliveryCustomer/" + delivery.getCustomerId());
+        customer.setLink(uriInfo.getBaseUri() + "deliveryCustomer/" + delivery.getCustomerId());
         delivery.setCustomerId(null);
 
         ShortDeliveryAddress fromAddress = new ShortDeliveryAddress();
         fromAddress.setAddressId(delivery.getFromAddressId());
         fromAddress.setGeoLat(deliveryAddressBean.getLonLat(delivery.getFromAddressId(), "lat"));
         fromAddress.setGeoLon(deliveryAddressBean.getLonLat(delivery.getFromAddressId(), "lon"));
-        fromAddress.setLink("http://localhost:8080/v1/deliveryAddress/" + delivery.getFromAddressId());
+        fromAddress.setLink(uriInfo.getBaseUri() + "deliveryAddress/" + delivery.getFromAddressId());
         delivery.setFromAddressId(null);
 
         ShortDeliveryAddress toAddress = new ShortDeliveryAddress();
         toAddress.setAddressId(delivery.getToAddressId());
         toAddress.setGeoLat(deliveryAddressBean.getLonLat(delivery.getToAddressId(), "lat"));
         toAddress.setGeoLon(deliveryAddressBean.getLonLat(delivery.getToAddressId(), "lon"));
-        toAddress.setLink("http://localhost:8080/v1/deliveryAddress/" + delivery.getToAddressId());
+        toAddress.setLink(uriInfo.getBaseUri() + "deliveryAddress/" + delivery.getToAddressId());
         delivery.setToAddressId(null);
 
+        delivery.setStatus(status);
         delivery.setType(type);
         delivery.setTransport(transport);
         delivery.setCustomer(customer);
