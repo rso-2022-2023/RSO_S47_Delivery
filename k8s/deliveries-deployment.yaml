@@ -13,7 +13,7 @@ spec:
         app: deliveries
     spec:
       containers:
-        - image: feniksa18/deliveries:2022-12-04-16-29-49
+        - image: feniksa18/deliveries:2023-01-12-12-16-14
           name: deliveries
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
@@ -48,7 +48,7 @@ kind: Service
 metadata:
   name: deliveries
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 8080
       protocol: TCP

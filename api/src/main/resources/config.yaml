@@ -87,5 +87,5 @@ app-properties:
   external-services:
     enabled: true
   amazon-location:
-    access-key: AKIA3JC5Z26EQBZLG5EQ
-    secret-key: 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
+    access-key: AKIA3JC5Z26E4DXHLMMM
+    secret-key: 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
