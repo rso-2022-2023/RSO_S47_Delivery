@@ -13,7 +13,7 @@ spec:
         app: deliveries
     spec:
       containers:
-        - image: feniksa18/deliveries:2023-01-13-00-30-05
+        - image: feniksa18/deliveries:2023-01-14-02-04-27
           name: deliveries
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
@@ -55,3 +55,5 @@ spec:
       targetPort: server
   selector:
     app: deliveries
+  externalIPs:
+    - 146.190.206.102

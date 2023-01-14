@@ -51,11 +51,6 @@ kumuluzee:
                                   </Root>
                               </Loggers>
                           </Configuration>'
-  rest-client:
-    registrations:
-      - class: delivery-processing-api
-        url: http://localhost:8082/v1
-        read-timeout: 5000
   dev:
     scan-libraries:
       - deliveries-services
