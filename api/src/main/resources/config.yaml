@@ -7,6 +7,11 @@ kumuluzee:
     base-url: http://localhost:8080
     http:
       port: 8080
+  openapi-mp:
+    ui:
+      server-auto-config:
+        enabled: true
+        original-uri-chek: false
   datasources:
     - jndi-name: jdbc/DeliveriesDS
       connection-url: jdbc:postgresql://localhost:5434/deliveries
