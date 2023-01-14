@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import si.fri.rso.samples.deliveries.services.clients.AmazonLocationClient;
-import si.fri.rso.samples.deliveries.services.streaming.EventProducerImpl;
 
 @Log
 @ApplicationScoped
@@ -50,8 +49,6 @@ public class DeliveryResource {
     @Context
     protected UriInfo uriInfo;
 
-    @Inject
-    private EventProducerImpl eventProducer;
 
     @Operation(description = "Get a list of all deliveries.", summary = "Get all deliveries.")
     @APIResponses({

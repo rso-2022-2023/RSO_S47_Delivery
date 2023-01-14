@@ -31,7 +31,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import si.fri.rso.samples.deliveries.services.clients.AmazonLocationClient;
-import si.fri.rso.samples.deliveries.services.streaming.EventProducerImpl;
 
 @Log
 @ApplicationScoped
